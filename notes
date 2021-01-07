@@ -1,0 +1,16 @@
+1) Build a Vehicle CLI 
+2) Welcome the user, prompt them to select an option of makes (Vehicle Brands) or to exit the program
+3) If the user selects an option, Print a list of the options which will be the makes list (Vehicle brands)
+4) After the user chooses a an option for makes (vehicle brand), print the list of years
+5) Once the user inputs the year to display the vehicle Model  
+6) if they select to exit the program then display a goodbye phrase 
+7)return if the user puts in any key 
+
+THE END 
+
+
+ 3 Classes 
+
+ 1) CLI class -- controller -- what communicates with my user 
+ 2) Vehicle class -- where my objects are created and stored for user display 
+ 3) API class 
