@@ -1,12 +1,14 @@
 class Cli
     @@brand_array = ["honda", "hyundai", "toyota", "kia", "ford", "chevrolet", "jeep", "gmc", "subaru", "nissan"]
+   
 
     def initialize 
-        @@vehicle_list = []
+        @@vehicle_list = [] 
         call
     end 
-    
-    def call 
+
+   
+    def call  
         puts "Welcome to Zelayas Car Dealership!"
         puts ""
         puts "To see Vehicle Brand, enter '1' " 
@@ -18,9 +20,7 @@ class Cli
         menu 
     end 
 
-    #vehicle.all should == 85 results 
-
-    def menu
+    def menu  
         input = gets.strip.downcase 
         if input == "1"
             system("clear") 
@@ -85,7 +85,7 @@ class Cli
         if @@vehicle_list.length > 0
             system("clear")
             @@vehicle_list.each_with_index {|val, ind| puts "#{ind + 1}. #{val}"}
-            sleep(2)
+            sleep(2) 
             system("clear")
             call 
         else
@@ -96,7 +96,7 @@ class Cli
             call
         end
     end
-
+     
 
     def goodbye 
         system("clear")

@@ -12,7 +12,6 @@ class Api
   
 
     def get_response_body
-        #binding.pry
         uri = URI.parse(@url)
         response = Net::HTTP.get_response(uri)
         response.body
