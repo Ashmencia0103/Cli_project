@@ -1,6 +1,7 @@
  #!/usr/bin/env ruby 
  
- require_relative '../lib/vehicle_cli/version.rb'
+require_relative '../config/environment.rb'
 
+ #binding.pry 
 
-puts "Hello world"
+ Cli.new.call 
