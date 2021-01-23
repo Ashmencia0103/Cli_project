@@ -1,13 +1,8 @@
 class Cli
     @@brand_array = ["honda", "hyundai", "toyota", "kia", "ford", "chevrolet", "jeep", "gmc", "subaru", "nissan"]
-   
-
     def initialize 
-        @@vehicle_list = [] 
         call
     end 
-
-   
     def call  
         puts "Welcome to Zelayas Car Dealership!"
         puts ""
@@ -19,7 +14,6 @@ class Cli
         puts ""
         menu 
     end 
-
     def menu  
         input = gets.strip.downcase 
         if input == "1"
@@ -33,18 +27,19 @@ class Cli
             invalid_entry
         end 
     end 
-
     def vehicle_list
        @@brand_array.each.with_index {|brand, index| puts "#{index + 1}. #{brand.capitalize}"} 
-
         puts ""
         puts ""
         puts "Which brand would you like details about, enter its number: "
         input = gets.strip.downcase
         system("clear") 
-        vehicle_selection(input)
+        if input.to_i > 0 && input.to_i < 11
+            vehicle_selection(input)
+        else
+            invalid_entry
+        end
     end 
-
     def vehicle_selection(vehicle) 
         puts "You have selected #{@@brand_array[vehicle.to_i-1]}"
         puts ""
@@ -52,7 +47,6 @@ class Cli
         year = gets.strip
         make = @@brand_array[vehicle.to_i-1]
         system("clear") 
-        #binding.pry
         response = Api.new(make, year).parse_json
         results = response["Results"]
         models = results.collect {|m| m["Model_Name"]}
@@ -62,9 +56,9 @@ class Cli
         puts "If you want to save one of these vehicles, enter its number. Otherwise, enter 'm' to return to main menu."
         answer = gets.strip
         system("clear")
-        if answer.to_i > 0 && answer.to_i < models.length
+        if answer.to_i > 0 && answer.to_i <= models.length
             #to integer 
-            save_vehicle(models[answer.to_i - 1])
+            save_vehicle(make, models[answer.to_i - 1], year, "car")
             puts "#{models[answer.to_i - 1]} has been saved to your list!"
             sleep(2)
             system("clear")
@@ -76,16 +70,14 @@ class Cli
             invalid_entry
         end
     end 
-
-    def save_vehicle(vehicle)
-        @@vehicle_list << vehicle
+    def save_vehicle(make, model, year, vehicle_class)
+        Vehicle.new(make, model, year, vehicle_class)
     end
-
     def view_vehicle_list
-        if @@vehicle_list.length > 0
+        if Vehicle.all.length > 0
             system("clear")
-            @@vehicle_list.each_with_index {|val, ind| puts "#{ind + 1}. #{val}"}
-            sleep(2) 
+            Vehicle.all.each_with_index {|val, ind| puts "#{ind+1}. #{val.year} #{val.make.capitalize} #{val.model.capitalize} (#{val.vehicle_class})"}
+            sleep(4) 
             system("clear")
             call 
         else
@@ -96,8 +88,6 @@ class Cli
             call
         end
     end
-     
-
     def goodbye 
         system("clear")
         puts "Goodbye, we hope to see you soon!"
@@ -105,7 +95,6 @@ class Cli
         system("clear")
         exit 
     end 
-
     def invalid_entry
         puts "invalid entry, try again"
         sleep(2)
